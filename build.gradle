@@ -1,0 +1,37 @@
+        apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+android {
+    compileSdk 33
+    defaultConfig {
+        applicationId "com.example.tradingbot"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+chaquopy {
+    // Specify pip requirements for the embedded Python environment
+    // Keep requirements minimal; heavy packages like ccxt may bloat the APK and require extra native libs.
+    // You may need to adjust packages and include native binaries or use a remote backend for heavy tasks.
+    python {
+        pip {
+            install "numpy"
+            install "pandas"
+            install "requests"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+}
